@@ -5,8 +5,10 @@
     "menu header"
     "menu content"
     "menu footer";
-  grid-template-columns: 1fr 3fr;
-  background-color: #2196F3;
+  /* grid-template-columns: 1fr 3fr; */
+  grid-template-columns: 250px 1fr; /* Adjust the first value to control the menu width */
+
+  background-color: rgb(240, 236, 236);
 }
 .container > div {
   background-color: rgba(255, 255, 255, 0.8);
@@ -14,11 +16,13 @@
 }
 .container > div.header {
   grid-area: header;
-  text-align: center;
+  /* text-align: center; */
   height: 60px;
 }
 .container > div.menu {
   grid-area: menu;
+  width: 100%; /* You can also set a specific width like 250px or percentage */
+  max-width: 300px; 
 }
 .container > div.menu > div > ul > li{
   padding: 10px;
