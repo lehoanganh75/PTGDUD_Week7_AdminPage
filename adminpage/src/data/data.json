@@ -1,20 +1,46 @@
-[
-    {
-        "title": "Turnover",
-        "price": 92405,
-        "description": "5.39%",
-        "id": "1"
-    },
-    {
-        "title": "Profit",
-        "price": 32218,
-        "description": "5.39%",
-        "id": "2"
-    },
-    {
-        "title": "New customer",
-        "price": 298,
-        "description": "6.84%",
-        "id": "3"
-    }
-]
+{
+    "customers": [
+      {
+        "customer": "Elizabeth Lee",
+        "company": "AvatarSystems",
+        "orderValue": "$359",
+        "orderDate": "10/07/2023",
+        "status": "New"
+      },
+      {
+        "customer": "Carlos Garcia",
+        "company": "SmoozeShift",
+        "orderValue": "$747",
+        "orderDate": "24/07/2023",
+        "status": "New"
+      },
+      {
+        "customer": "Elizabeth Bailey",
+        "company": "Prime Time Telecom",
+        "orderValue": "$564",
+        "orderDate": "08/08/2023",
+        "status": "In-progress"
+      },
+      {
+        "customer": "Ryan Brown",
+        "company": "OmniTech Corporation",
+        "orderValue": "$541",
+        "orderDate": "31/08/2023",
+        "status": "In-progress"
+      },
+      {
+        "customer": "Ryan Young",
+        "company": "DataStream Inc.",
+        "orderValue": "$769",
+        "orderDate": "01/05/2023",
+        "status": "Completed"
+      },
+      {
+        "customer": "Hailey Adams",
+        "company": "FlowRush",
+        "orderValue": "$922",
+        "orderDate": "10/06/2023",
+        "status": "Completed"
+      }
+    ]
+  }

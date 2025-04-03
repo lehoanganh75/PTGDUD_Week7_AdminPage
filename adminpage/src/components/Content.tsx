@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import customerData from '../data/data.json';
 
 const Content = ({ className }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 4;
 
   useEffect(() => {
     fetch('https://67de719f471aaaa742847203.mockapi.io/productData/dataOverview')
@@ -36,6 +41,15 @@ const Content = ({ className }) => {
   const getCardBackground = (title) => {
     return title === 'turnover' ? '#FEF0F5FF' : '#F0F6FFFF';
   };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const paginatedCustomers = customerData.customers.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <div className={`p-4 bg-white shadow-md h-full overflow-auto ${className}`}>
@@ -87,45 +101,67 @@ const Content = ({ className }) => {
           ))}
         </div>
       )}
-      <div className='mt-8'>
+
+<div className='mt-8'>
         <div className='flex p-4'>
           <img src="./image/Folder.png" className='mr-2' alt="Report Icon" />
           <h2 className='font-bold text-lg'>Detailed report</h2>
         </div>
         
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
+          <table className="min-w-full bg-white rounded-lg overflow-hidden">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="py-3 px-4 border-b text-left">CUSTOMER NAME</th>
-                <th className="py-3 px-4 border-b text-left">COMPANY</th>
-                <th className="py-3 px-4 border-b text-left">ORDER VALUE</th>
-                <th className="py-3 px-4 border-b text-left">ORDER DATE</th>
-                <th className="py-3 px-4 border-b text-left">STATUS</th>
+              <tr className="bg-gray-50">
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CUSTOMER NAME</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">COMPANY</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER VALUE</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER DATE</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="hover:bg-gray-50">
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-              </tr>
-              <tr className="hover:bg-gray-50">
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-                <td className="py-3 px-4 border-b">-</td>
-              </tr>
+            <tbody className="divide-y divide-gray-200">
+              {paginatedCustomers.map((customer, index) => (
+                <tr key={index} className="hover:bg-gray-50 transition-colors">
+                  <td className="py-4 px-6 whitespace-nowrap text-sm font-medium text-gray-900">{customer.customer}</td>
+                  <td className="py-4 px-6 whitespace-nowrap text-sm text-gray-500">{customer.company}</td>
+                  <td className="py-4 px-6 whitespace-nowrap text-sm text-gray-500 font-medium">{customer.orderValue}</td>
+                  <td className="py-4 px-6 whitespace-nowrap text-sm text-gray-500">{customer.orderDate}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">
+                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      customer.status === 'New' ? 'bg-blue-100 text-blue-800' :
+                      customer.status === 'In-progress' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-green-100 text-green-800'
+                    }`}>
+                      {customer.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <div className="text-right mt-2 text-sm text-gray-500">
-            63 results
+          
+          <div className="flex items-center justify-between mt-4">
+            <div className="text-sm text-gray-500">
+              Showing <span className="font-medium">{(page-1)*rowsPerPage+1}</span> to{' '}
+              <span className="font-medium">{Math.min(page*rowsPerPage, customerData.customers.length)}</span> of{' '}
+              <span className="font-medium">{customerData.customers.length}</span> results
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Stack spacing={2}>
+                <Pagination 
+                  count={Math.ceil(customerData.customers.length / rowsPerPage)}
+                  page={page}
+                  onChange={handleChangePage}
+                  color="primary"
+                  shape="rounded"
+                />
+              </Stack>
+            </div>
+          </div> 
+      
           </div>
-        </div>
-      </div>
+          </div>
     </div>
   );
 };
