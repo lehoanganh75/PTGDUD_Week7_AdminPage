@@ -32,6 +32,7 @@ const Content = ({ className }) => {
   const formatValue = (value) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+
   const getCardBackground = (title) => {
     return title === 'turnover' ? '#FEF0F5FF' : '#F0F6FFFF';
   };
@@ -86,6 +87,45 @@ const Content = ({ className }) => {
           ))}
         </div>
       )}
+      <div className='mt-8'>
+        <div className='flex p-4'>
+          <img src="./image/Folder.png" className='mr-2' alt="Report Icon" />
+          <h2 className='font-bold text-lg'>Detailed report</h2>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-200">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="py-3 px-4 border-b text-left">CUSTOMER NAME</th>
+                <th className="py-3 px-4 border-b text-left">COMPANY</th>
+                <th className="py-3 px-4 border-b text-left">ORDER VALUE</th>
+                <th className="py-3 px-4 border-b text-left">ORDER DATE</th>
+                <th className="py-3 px-4 border-b text-left">STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="hover:bg-gray-50">
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+              </tr>
+              <tr className="hover:bg-gray-50">
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+                <td className="py-3 px-4 border-b">-</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="text-right mt-2 text-sm text-gray-500">
+            63 results
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
