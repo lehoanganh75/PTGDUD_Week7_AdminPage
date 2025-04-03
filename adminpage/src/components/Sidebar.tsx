@@ -1,16 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ className }) => {
+  const menuItems = [
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Projects', path: '/projects' },
+    { name: 'Teams', path: '/teams' },
+    { name: 'Analytics', path: '/analytics' },
+    { name: 'Messages', path: '/messages' },
+    { name: 'Integrations', path: '/integrations' }
+  ];
+
   return (
     <div className={`menu bg-white p-4 shadow-lg h-full ${className}`}>
       <div>
         <img src="./image/logo.png" alt="Logo" className='w-full'/>
       </div>
       <ul className='mt-4'>
-        {['Dashboard', 'Projects', 'Teams', 'Analytics', 'Messages', 'Integrations'].map((item, index) => (
+        {menuItems.map((item, index) => (
           <li key={index} className='flex items-center p-2 hover:bg-pink-300 rounded-lg'>
-            <img src="./image/Folder.png" alt={item} className='mr-2'/>
-            <a href="#">{item}</a>
+            <img src="./image/Folder.png" alt={item.name} className='mr-2'/>
+            <Link to={item.path} className="w-full">{item.name}</Link>
           </li>
         ))}
       </ul>
