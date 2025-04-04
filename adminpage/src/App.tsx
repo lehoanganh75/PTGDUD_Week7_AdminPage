@@ -14,7 +14,7 @@ function App() {
         <Sidebar className="row-span-2" />
         <Routes>
           <Route path="/" element={<Content className="overflow-auto" />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
