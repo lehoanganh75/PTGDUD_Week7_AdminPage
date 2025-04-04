@@ -12,7 +12,15 @@ const CustomerTable = ({ page, setPage, rowsPerPage }) => {
     company: '',
     orderValue: '',
     orderDate: '',
-    status: ''
+    status: 'New'
+  });
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newCustomer, setNewCustomer] = useState({
+    customer: '',
+    company: '',
+    orderValue: '',
+    orderDate: '',
+    status: 'New'
   });
 
   const handleChangePage = (event, newPage) => {
@@ -47,6 +55,14 @@ const CustomerTable = ({ page, setPage, rowsPerPage }) => {
     });
   };
 
+  const handleNewCustomerChange = (e) => {
+    const { name, value } = e.target;
+    setNewCustomer({
+      ...newCustomer,
+      [name]: value
+    });
+  };
+
   const handleSave = (index) => {
     const updatedCustomers = [...customers];
     updatedCustomers[index] = {
@@ -60,9 +76,22 @@ const CustomerTable = ({ page, setPage, rowsPerPage }) => {
 
     setCustomers(updatedCustomers);
     setEditingId(null);
-    
-    // In a real app, you would save to an API here
-    console.log('Updated customers:', updatedCustomers);
+  };
+
+  const handleAddCustomer = () => {
+    const updatedCustomers = [...customers, {
+      ...newCustomer,
+      id: customers.length + 1 
+    }];
+    setCustomers(updatedCustomers);
+    setNewCustomer({
+      customer: '',
+      company: '',
+      orderValue: '',
+      orderDate: '',
+      status: 'New'
+    });
+    setShowAddForm(false);
   };
 
   const paginatedCustomers = customers.slice(
@@ -72,10 +101,101 @@ const CustomerTable = ({ page, setPage, rowsPerPage }) => {
 
   return (
     <div className="mt-8">
-      <div className="flex p-4">
-        <img src="./image/Folder.png" className="mr-2" alt="Report Icon" />
-        <h2 className="font-bold text-lg">Detailed report</h2>
+      <div className="flex justify-between">
+        <div className="flex p-3">
+          <img src="./image/Folder.png" className="mr-2" alt="Report Icon" />
+          <h2 className="font-bold text-lg">Detailed report</h2>
+        </div>
+        <div className='flex'>
+          <img src="./image/Move up.png" alt="" className='h-[25px] absolute mt-4 ml-1' />
+          <button 
+            onClick={() => setShowAddForm(true)}
+            className='p-2 border rounded-lg border-pink-400 text-pink-400 px-8 hover:bg-pink-50'
+          >
+            Add User
+          </button>
+        </div>
       </div>
+
+      {showAddForm && (
+        <div className="fixed inset-0 bg-gray-70 bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">Add New Customer</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Customer Name</label>
+                <input
+                  type="text"
+                  name="customer"
+                  value={newCustomer.customer}
+                  onChange={handleNewCustomerChange}
+                  className="mt-1 block w-full border rounded px-3 py-2"
+                  placeholder="Enter customer name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={newCustomer.company}
+                  onChange={handleNewCustomerChange}
+                  className="mt-1 block w-full border rounded px-3 py-2"
+                  placeholder="Enter company name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Order Value</label>
+                <input
+                  type="text"
+                  name="orderValue"
+                  value={newCustomer.orderValue}
+                  onChange={handleNewCustomerChange}
+                  className="mt-1 block w-full border rounded px-3 py-2"
+                  placeholder="Enter order value"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Order Date</label>
+                <input
+                  type="date"
+                  name="orderDate"
+                  value={newCustomer.orderDate}
+                  onChange={handleNewCustomerChange}
+                  className="mt-1 block w-full border rounded px-3 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <select
+                  name="status"
+                  value={newCustomer.status}
+                  onChange={handleNewCustomerChange}
+                  className="mt-1 block w-full border rounded px-3 py-2"
+                >
+                  <option value="New">New</option>
+                  <option value="In-progress">In-progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end space-x-3">
+              <button
+                onClick={() => setShowAddForm(false)}
+                className="px-4 py-2 border rounded hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddCustomer}
+                className="bg-pink-400 text-white px-4 py-2 rounded hover:bg-pink-500"
+              >
+                Add Customer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg overflow-hidden">
@@ -89,6 +209,7 @@ const CustomerTable = ({ page, setPage, rowsPerPage }) => {
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER VALUE</th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ORDER DATE</th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">STATUS</th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ACTIONS</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
