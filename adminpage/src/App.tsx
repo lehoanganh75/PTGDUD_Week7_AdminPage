@@ -5,6 +5,11 @@ import Content from './components/Content';
 import './index.css';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
+import Projects from './pages/Projects';
+import Teams from './pages/Teams';
+import Analytics from './pages/Analytics';
+import Integrations from './pages/Integrations';
+import Messages from './pages/Messages';
 
 function App() {
   return (
@@ -15,6 +20,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Content className="overflow-auto" />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/integrations" element={<Integrations />} />
         </Routes>
       </div>
     </Router>
